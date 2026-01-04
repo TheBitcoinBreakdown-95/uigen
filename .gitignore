@@ -55,3 +55,9 @@ next-env.d.ts
 
 # claude code local settings
 .claude/
+
+# playwright mcp screenshots
+.playwright-mcp/
+
+# temporary files
+nul
