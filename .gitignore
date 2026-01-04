@@ -61,3 +61,13 @@ next-env.d.ts
 
 # temporary files
 nul
+
+# Obsidian files
+.obsidian/
+.obsidian-claude-code/
+
+# Personal files
+Api key.md
+Claude plugin.md
+Testing ground.md
+Welcome.md
