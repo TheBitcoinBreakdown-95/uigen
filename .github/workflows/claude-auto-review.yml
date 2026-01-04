@@ -14,6 +14,10 @@ jobs:
   claude-review:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -59,7 +63,7 @@ jobs:
       - name: Claude Code Auto Review
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_OAUTH_TOKEN }}
 
           prompt: |
             ${{ github.event_name == 'pull_request' && format('
@@ -109,102 +113,6 @@ jobs:
             - Base Branch: {3}
             - Head Branch: {4}
             ', github.event.pull_request.number, github.event.pull_request.title, github.event.pull_request.user.login, github.event.pull_request.base.ref, github.event.pull_request.head.ref) || inputs.task || 'Review the code and fix any issues' }}
-
-          custom_instructions: |
-            # UIGen Project Context
-
-            ## Project Overview
-            UIGen is an AI-powered React component generator with live preview.
-            Users describe components in chat, and Claude generates code with immediate preview.
-
-            ## Environment Setup
-            - Node.js 20 is installed
-            - All dependencies are installed via `npm ci`
-            - Prisma client is generated and migrations are applied
-            - Dev server is running at http://localhost:3000
-            - Server logs are written to dev-server.log
-
-            ## Available Commands
-            - `npm run dev` - Start development server (already running)
-            - `npm run build` - Build for production
-            - `npm run lint` - Run ESLint
-            - `npm run test` - Run Vitest tests
-            - `npx tsc --noEmit` - Type check
-            - `sqlite3 prisma/dev.db` - Query SQLite database
-
-            ## Tools Available
-            - **Bash**: For running commands (npm, git, etc.)
-            - **File Tools**: Read, Edit, Write for code changes
-            - **Playwright MCP**: Browser automation for UI testing
-              * Use `mcp__playwright__browser_navigate` to open localhost:3000
-              * Use `mcp__playwright__browser_snapshot` to see the page
-              * Use `mcp__playwright__browser_click` to interact
-              * Use `mcp__playwright__browser_console_messages` to check for errors
-
-            ## Project Structure
-            - `/src/app` - Next.js app router pages
-            - `/src/components` - React components
-            - `/src/lib` - Utilities, contexts, file system
-            - `/src/actions` - Server actions
-            - `/prisma` - Database schema and migrations
-
-            ## Important Notes
-            - This is a Next.js 14+ app using App Router
-            - Uses Tailwind CSS for styling
-            - Uses Prisma with SQLite for database
-            - Virtual file system stores generated components in memory
-            - Preview uses Babel for in-browser JSX transformation
-
-            ## Code Standards
-            - Use TypeScript strictly
-            - Follow existing code patterns
-            - Use comments sparingly (only for complex logic)
-            - Prefer functional components with hooks
-            - Use server actions for data mutations
-
-          mcp_config: |
-            {
-              "mcpServers": {
-                "playwright": {
-                  "command": "npx",
-                  "args": [
-                    "@playwright/mcp@latest",
-                    "--allowed-origins",
-                    "localhost:3000;cdn.tailwindcss.com;esm.sh;cdn.jsdelivr.net;unpkg.com"
-                  ]
-                }
-              }
-            }
-
-          allowed_tools: |
-            Bash(npm:*),
-            Bash(npx:*),
-            Bash(node:*),
-            Bash(git:*),
-            Bash(sqlite3:*),
-            Bash(curl:*),
-            Bash(echo:*),
-            Bash(cat:*),
-            Bash(ls:*),
-            Bash(pwd:*),
-            Bash(grep:*),
-            Read,
-            Edit,
-            Write,
-            Glob,
-            Grep,
-            mcp__playwright__browser_navigate,
-            mcp__playwright__browser_snapshot,
-            mcp__playwright__browser_click,
-            mcp__playwright__browser_type,
-            mcp__playwright__browser_take_screenshot,
-            mcp__playwright__browser_console_messages,
-            mcp__playwright__browser_network_requests,
-            mcp__playwright__browser_evaluate,
-            mcp__playwright__browser_wait_for,
-            mcp__playwright__browser_close,
-            mcp__playwright__browser_tabs,
-            mcp__playwright__browser_navigate_back
 
       - name: Commit Claude's fixes
         if: success()
