@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basking Ridge Garden Club</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-green: #2B5F1E;
+            --bright-green: #4CAF50;
+            --pink: #E91E63;
+            --light-pink: #FFE4EC;
+            --purple: #9C27B0;
+            --light-purple: #F3E5F5;
+            --yellow: #FFC107;
+            --light-yellow: #FFF9E6;
+            --orange: #FF6F00;
+            --cream: #FFFBF0;
+            --dark-text: #2C3E2D;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--dark-text);
+            background: linear-gradient(135deg, var(--cream) 0%, #FFF5E1 100%);
+            line-height: 1.6;
+        }
+
+        /* Decorative background pattern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(233, 30, 99, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(156, 39, 176, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 193, 7, 0.03) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, var(--deep-green) 0%, var(--bright-green) 100%);
+            padding: 0.8rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-bottom: 4px solid var(--yellow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background: white;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 6px solid var(--yellow);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero::before {
+            top: -100px;
+            left: -100px;
+        }
+
+        .hero::after {
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            border: 5px solid var(--yellow);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-dates {
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .hero-mission {
+            font-size: 1.15rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.2rem;
+            border-radius: 12px;
+            line-height: 1.7;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Info Cards - Top Section */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.5) 100%);
+            pointer-events: none;
+        }
+
+        .info-card:nth-child(1) { border-top-color: var(--pink); }
+        .info-card:nth-child(2) { border-top-color: var(--purple); }
+        .info-card:nth-child(3) { border-top-color: var(--yellow); }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--deep-green);
+        }
+
+        .info-card p {
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+        }
+
+        .info-card strong {
+            color: var(--pink);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid;
+            cursor: pointer;
+        }
+
+        .gallery-card:nth-child(4n+1) { border-color: var(--pink); }
+        .gallery-card:nth-child(4n+2) { border-color: var(--purple); }
+        .gallery-card:nth-child(4n+3) { border-color: var(--yellow); }
+        .gallery-card:nth-child(4n+4) { border-color: var(--bright-green); }
+
+        .gallery-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--light-pink) 0%, var(--light-purple) 100%);
+            text-align: center;
+            font-weight: 600;
+            color: var(--deep-green);
+        }
+
+        /* Board Section */
+        .board-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 4px solid var(--pink);
+            background: linear-gradient(135deg, white 0%, var(--light-yellow) 100%);
+        }
+
+        .board-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--deep-green);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--purple);
+            padding-bottom: 0.5rem;
+        }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .board-member {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .board-member:nth-child(odd) { border-left-color: var(--pink); }
+        .board-member:nth-child(even) { border-left-color: var(--purple); }
+
+        .board-position {
+            font-weight: 600;
+            color: var(--deep-green);
+            margin-bottom: 0.3rem;
+        }
+
+        .board-name {
+            color: var(--dark-text);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+            border: 3px solid var(--yellow);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.5);
+        }
+
+        .cta-center {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--deep-green) 0%, var(--bright-green) 100%);
+            color: white;
+            padding: 2rem 2rem 1.5rem;
+            margin-top: 2rem;
+            border-top: 6px solid var(--yellow);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .social-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .social-link:hover {
+            background: var(--pink);
+            transform: translateY(-3px);
+            border-color: var(--yellow);
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                font-size: 0.85rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-nav">
+                <img src="logo.jpg" alt="BRGC Logo" class="logo-img">
+                <a href="#" class="logo-text">Basking Ridge Garden Club</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#gallery">GALLERY</a></li>
+                <li><a href="#members">MEMBER PAGE</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <img src="logo.jpg" alt="Basking Ridge Garden Club Logo" class="hero-logo">
+            <h1>Basking Ridge Garden Club</h1>
+            <p class="hero-dates">Organized 1923 | Federated 1925</p>
+            <p class="hero-mission">
+                The purpose of The Basking Ridge Garden Club is to encourage the spirit of gardening, to preserve our trees, birds and wildflowers, to be environmentally aware, and to contribute to the beautification of our community.
+            </p>
+        </div>
+    </section>
+
+    <!-- Info Cards Section -->
+    <div class="container">
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>We Meet Monthly</h3>
+                <p>Our monthly meetings are scheduled the <strong>first Monday of the month</strong> and take place at the Environmental Education Center located at <strong>190 Lord Stirling Road, Basking Ridge</strong></p>
+                <p><strong>9:15am</strong> for refreshments</p>
+                <p><strong>10:00am</strong> Business Meeting</p>
+                <p><strong>10:45am</strong> Program</p>
+            </div>
+
+            <div class="info-card">
+                <h3>We Love to Dig!</h3>
+                <p>We are an active group and like to get our hands dirty!</p>
+                <p>You can often see us working in town, at the VNA of Somerset Hills, the Bernards Township Library and the Environmental Education Center, to name a few.</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Apply for Membership</h3>
+                <p>Join our vibrant community of garden enthusiasts! We welcome members who share our passion for gardening, environmental stewardship, and community beautification.</p>
+                <div class="cta-center">
+                    <a href="#contact" class="cta-button">Join Us Today!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="container" id="gallery">
+        <h2 class="section-title">Our Beautiful Work in the Community</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="download.jpg" alt="Garden Club Members">
+                <div class="gallery-caption">Our Dedicated Members at Work</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (1).jpg" alt="Community Plantings">
+                <div class="gallery-caption">Beautiful Seasonal Plantings</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (2).jpg" alt="Board Members">
+                <div class="gallery-caption">2023-2024 Board Members</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (3).jpg" alt="Spring Flowers">
+                <div class="gallery-caption">Vibrant Spring Arrangements</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (4).jpg" alt="Garden Beds">
+                <div class="gallery-caption">Community Garden Beds</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (5).jpg" alt="Purple Flowers">
+                <div class="gallery-caption">Native Plant Displays</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (6).jpg" alt="Park Garden">
+                <div class="gallery-caption">Beautifying Our Town</div>
+            </div>
+
+            <div class="gallery-card">
+                <img src="download (7).jpg" alt="Garden Project">
+                <div class="gallery-caption">Hands-On Gardening</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Board Section -->
+    <div class="container" id="members">
+        <div class="board-section">
+            <h2 class="board-title">The Board, 2023-2024</h2>
+            <h3 style="text-align: center; color: var(--pink); margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Executive Board</h3>
+            <div class="board-grid">
+                <div class="board-member">
+                    <div class="board-position">President</div>
+                    <div class="board-name">Karen Ellis</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">First Vice President</div>
+                    <div class="board-name">Anne Goldsmith</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">Second Vice President</div>
+                    <div class="board-name">Tina Del Giorno</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">Corresponding Secretary</div>
+                    <div class="board-name">Susan Frantz</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">Recording Secretary</div>
+                    <div class="board-name">Linda Hall</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">Treasurer</div>
+                    <div class="board-name">Barb Barbeau</div>
+                </div>
+                <div class="board-member">
+                    <div class="board-position">Advisors</div>
+                    <div class="board-name">Agnes Bailey & Rose Salaki</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem;">Connect With Us</h3>
+            <div class="social-links">
+                <a href="https://facebook.com/brgcnj" class="social-link">Facebook</a>
+                <a href="https://instagram.com/baskingridgegardenclub/" class="social-link">Instagram</a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 Basking Ridge Garden Club. Organized 1923 • Federated 1925</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
